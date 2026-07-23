@@ -21,9 +21,9 @@ load_dotenv(BASE_DIR / ".env")
 # Security
 # --------------------------------------------------
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "django-insecure-c!+w*7(@4!#i(v_kne!$l_#%!a$0e3zgykt07&cu2(b=f9%55^"
 
-DEBUG = os.getenv("DEBUG", "True") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "dashboard",
     "projects",
     "messaging",
-    "core",
 ]
 
 # --------------------------------------------------
