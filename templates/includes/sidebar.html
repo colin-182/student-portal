@@ -1,31 +1,47 @@
-<div class="col-md-2 bg-white border-end min-vh-100">
+<ul class="nav flex-column">
 
-    <div class="list-group list-group-flush">
+    <li class="nav-item">
+        <a
+            class="nav-link {% if request.resolver_match.app_name == 'dashboard' %}active{% endif %}"
+            href="{% url 'dashboard:home' %}">
 
-        <a href="{% url 'dashboard:home' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <i class="bi bi-house-door me-2"></i>
+            <i class="bi bi-speedometer2"></i>
             Dashboard
-        </a>
 
-        <a href="{% url 'dashboard:projects' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">
-            <i class="bi bi-kanban me-2"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a
+            class="nav-link {% if request.resolver_match.app_name == 'projects' %}active{% endif %}"
+            href="{% url 'projects:list' %}">
+
+            <i class="bi bi-folder"></i>
             Projects
-        </a>
 
-        <a href="{% url 'dashboard:messages' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'messages' %}active{% endif %}">
-            <i class="bi bi-chat-dots me-2"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="#">
+
+            <i class="bi bi-chat-dots"></i>
             Messages
-        </a>
 
-        <a href="{% url 'dashboard:profile' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
-            <i class="bi bi-person me-2"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="#">
+
+            <i class="bi bi-person-circle"></i>
             Profile
+
         </a>
+    </li>
 
-    </div>
-
-</div>
+</ul>
