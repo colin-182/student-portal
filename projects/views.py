@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
+from .forms import ProjectForm
 from .models import Project
 
 
@@ -25,3 +26,23 @@ def project_detail(request, pk):
             "project": project,
         },
     )
+
+def project_create(request):
+    if request.method == "POST":
+        form=ProjectForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect("projects:list")
+        
+        else:
+            form = ProjectForm()
+
+            return render(
+                request,
+                "projects/project_form.html",
+                {
+                    "form": form,
+                },
+            )
