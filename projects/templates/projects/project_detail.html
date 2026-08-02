@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ project.title }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    {{ project.title }}
+</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <p>
+            <strong>Description:</strong><br>
+            {{ project.description }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ project.get_status_display }}
+        </p>
+
+        <p>
+            <strong>Deadline:</strong>
+            {{ project.deadline }}
+        </p>
+
+        <a href="{% url 'projects:list' %}" class="btn btn-secondary">
+            ← Back to Projects
+        </a>
+    </div>
+</div>
+
+{% endblock %}
