@@ -10,8 +10,10 @@
     {{ project.title }}
 </h1>
 
-<div class="card shadow-sm">
+<div class="card">
+
     <div class="card-body">
+
         <p>
             <strong>Description:</strong><br>
             {{ project.description }}
@@ -27,10 +29,35 @@
             {{ project.deadline }}
         </p>
 
-        <a href="{% url 'projects:list' %}" class="btn btn-secondary">
-            ← Back to Projects
-        </a>
+        <p>
+            <strong>Created:</strong>
+            {{ project.created_at }}
+        </p>
+
     </div>
+
+</div>
+
+<div class="mt-4">
+
+    <a
+        href="{% url 'projects:update' project.pk %}"
+        class="btn btn-primary">
+        Edit Project
+    </a>
+
+    <a
+        href="{% url 'projects:delete' project.pk %}"
+        class="btn btn-danger">
+        Delete Project
+    </a>
+
+    <a
+        href="{% url 'projects:list' %}"
+        class="btn btn-secondary">
+        Back to Projects
+    </a>
+
 </div>
 
 {% endblock %}
