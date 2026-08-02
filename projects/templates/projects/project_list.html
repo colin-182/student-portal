@@ -26,7 +26,11 @@ Projects
         {% for project in projects %}
 
         <tr>
-            <td>{{ project.title }}</td>
+            <td>
+                <a href="{% url 'projects:detail' project.pk %}">
+                    {{ project.title }}
+                </a>
+            </td>
             <td>{{ project.get_status_display }}</td>
             <td>{{ project.deadline }}</td>
         </tr>
