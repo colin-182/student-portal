@@ -52,6 +52,7 @@ def project_create(request):
         },
     )
 
+
 @login_required
 def project_update(request, pk):
     project = get_object_or_404(
@@ -67,18 +68,21 @@ def project_update(request, pk):
 
         if form.is_valid():
             form.save()
+
             return redirect(
                 "projects:detail",
                 pk=project.pk,
             )
-        
-        else:
-            form = ProjectForm(instance=project)
-        
-        return render(
-            request,
-            "projects/project_form.html",
-            {
-                "form": form,
-            },
+
+    else:
+        form = ProjectForm(
+            instance=project,
         )
+
+    return render(
+        request,
+        "projects/project_form.html",
+        {
+            "form": form,
+        },
+    )
