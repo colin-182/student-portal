@@ -92,9 +92,10 @@ def project_update(request, pk):
 @login_required
 def project_delete(request, pk):
     project = get_object_or_404(
-        Project,
-        pk=pk,
-    )
+    Project,
+    pk=pk,
+    owner=request.user,
+)
 
     if request.method == "POST":
         project.delete()
