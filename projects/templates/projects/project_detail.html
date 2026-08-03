@@ -40,17 +40,21 @@
 
 <div class="mt-4">
 
-    <a
-        href="{% url 'projects:update' project.pk %}"
-        class="btn btn-primary">
-        Edit Project
-    </a>
+    {% if request.user == project.owner %}
 
-    <a
-        href="{% url 'projects:delete' project.pk %}"
-        class="btn btn-danger">
-        Delete Project
-    </a>
+        <a
+            href="{% url 'projects:update' project.pk %}"
+            class="btn btn-primary">
+            Edit Project
+        </a>
+
+        <a
+            href="{% url 'projects:delete' project.pk %}"
+            class="btn btn-danger">
+            Delete Project
+        </a>
+
+    {% endif %}
 
     <a
         href="{% url 'projects:list' %}"
