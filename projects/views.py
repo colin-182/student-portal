@@ -56,9 +56,11 @@ def project_create(request):
 @login_required
 def project_update(request, pk):
     project = get_object_or_404(
-        Project,
-        pk=pk,
-    )
+    Project,
+    pk=pk,
+    owner=request.user,
+)
+    
 
     if request.method == "POST":
         form = ProjectForm(
