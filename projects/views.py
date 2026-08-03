@@ -5,8 +5,11 @@ from .forms import ProjectForm
 from .models import Project
 
 
+@login_required
 def project_list(request):
-    projects = Project.objects.all().order_by("-created_at")
+    projects = Project.objects.filter(
+        owner=request.user,
+    ).order_by("-created_at")
 
     return render(
         request,
@@ -18,7 +21,10 @@ def project_list(request):
 
 
 def project_detail(request, pk):
-    project = get_object_or_404(Project, pk=pk)
+    project = get_object_or_404(
+        Project,
+        pk=pk,
+    )
 
     return render(
         request,
@@ -56,11 +62,10 @@ def project_create(request):
 @login_required
 def project_update(request, pk):
     project = get_object_or_404(
-    Project,
-    pk=pk,
-    owner=request.user,
-)
-    
+        Project,
+        pk=pk,
+        owner=request.user,
+    )
 
     if request.method == "POST":
         form = ProjectForm(
@@ -89,20 +94,19 @@ def project_update(request, pk):
         },
     )
 
+
 @login_required
 def project_delete(request, pk):
     project = get_object_or_404(
-    Project,
-    pk=pk,
-    owner=request.user,
-)
+        Project,
+        pk=pk,
+        owner=request.user,
+    )
 
     if request.method == "POST":
         project.delete()
 
-        return redirect(
-            "projects:list",
-        )
+        return redirect("projects:list")
 
     return render(
         request,
