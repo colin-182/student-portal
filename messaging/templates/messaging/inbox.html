@@ -8,15 +8,27 @@ Inbox
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h2>Inbox</h2>
+<h2 style="color:red;">THIS IS THE INBOX TEMPLATE</h2>
 
-    <a
-        href="{% url 'messaging:new' %}"
-        class="btn btn-primary">
+    <div>
 
-        New Message
+        <a
+            href="{% url 'messaging:sent' %}"
+            class="btn btn-outline-secondary">
 
-    </a>
+            Sent Messages
+
+        </a>
+
+        <a
+            href="{% url 'messaging:new' %}"
+            class="btn btn-primary">
+
+            New Message
+
+        </a>
+
+    </div>
 
 </div>
 
@@ -27,10 +39,12 @@ Inbox
     <thead>
 
         <tr>
+
             <th>From</th>
             <th>Subject</th>
             <th>Sent</th>
             <th>Status</th>
+
         </tr>
 
     </thead>

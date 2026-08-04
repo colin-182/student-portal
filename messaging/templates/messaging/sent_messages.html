@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sent Messages
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>Sent Messages</h2>
+
+    <div>
+
+        <a
+            href="{% url 'messaging:inbox' %}"
+            class="btn btn-outline-secondary">
+
+            Inbox
+
+        </a>
+
+        <a
+            href="{% url 'messaging:new' %}"
+            class="btn btn-primary">
+
+            New Message
+
+        </a>
+
+    </div>
+
+</div>
+
+{% if messages %}
+
+<table class="table table-hover">
+
+    <thead>
+
+        <tr>
+
+            <th>To</th>
+            <th>Subject</th>
+            <th>Sent</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for message in messages %}
+
+        <tr>
+
+            <td>{{ message.recipient.username }}</td>
+
+            <td>{{ message.subject }}</td>
+
+            <td>{{ message.sent_at|date:"d M Y H:i" }}</td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info">
+
+    You haven't sent any messages yet.
+
+</div>
+
+{% endif %}
+
+{% endblock %}

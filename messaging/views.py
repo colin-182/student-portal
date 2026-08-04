@@ -8,12 +8,27 @@ from .models import Message
 @login_required
 def inbox(request):
     messages = Message.objects.filter(
-        recipient=request.user
+        recipient=request.user,
     )
 
     return render(
         request,
         "messaging/inbox.html",
+        {
+            "messages": messages,
+        },
+    )
+
+
+@login_required
+def sent_messages(request):
+    messages = Message.objects.filter(
+        sender=request.user,
+    )
+
+    return render(
+        request,
+        "messaging/sent_messages.html",
         {
             "messages": messages,
         },
