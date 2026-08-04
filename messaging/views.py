@@ -89,3 +89,24 @@ def message_create(request):
             "form": form,
         },
     )
+
+
+@login_required
+def message_delete(request, pk):
+    message = get_object_or_404(
+        Message,
+        pk=pk,
+        recipient=request.user,
+    )
+
+    if request.method == "POST":
+        message.delete()
+        return redirect("messaging:inbox")
+
+    return render(
+        request,
+        "messaging/message_confirm_delete.html",
+        {
+            "message": message,
+        },
+    )
