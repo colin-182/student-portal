@@ -58,6 +58,17 @@ def message_detail(request, pk):
 
 @login_required
 def message_create(request):
+    initial = {}
+
+    recipient_id = request.GET.get("recipient")
+    subject = request.GET.get("subject")
+
+    if recipient_id:
+        initial["recipient"] = recipient_id
+
+    if subject:
+        initial["subject"] = subject
+
     if request.method == "POST":
         form = MessageForm(request.POST)
 
@@ -69,7 +80,7 @@ def message_create(request):
             return redirect("messaging:inbox")
 
     else:
-        form = MessageForm()
+        form = MessageForm(initial=initial)
 
     return render(
         request,
