@@ -14,9 +14,7 @@ Dashboard
 
     <div class="col-md-4 mb-4">
 
-        <a
-            href="{% url 'projects:list' %}"
-            class="text-decoration-none">
+        <a href="{% url 'projects:list' %}" class="text-decoration-none">
 
             <div class="card shadow-sm h-100">
 
@@ -28,9 +26,7 @@ Dashboard
                         Projects
                     </h5>
 
-                    <h2>
-                        {{ project_count }}
-                    </h2>
+                    <h2>{{ project_count }}</h2>
 
                 </div>
 
@@ -42,9 +38,7 @@ Dashboard
 
     <div class="col-md-4 mb-4">
 
-        <a
-            href="{% url 'messaging:inbox' %}"
-            class="text-decoration-none">
+        <a href="{% url 'messaging:inbox' %}" class="text-decoration-none">
 
             <div class="card shadow-sm h-100">
 
@@ -56,9 +50,7 @@ Dashboard
                         Unread Messages
                     </h5>
 
-                    <h2>
-                        {{ unread_messages }}
-                    </h2>
+                    <h2>{{ unread_messages }}</h2>
 
                 </div>
 
@@ -70,9 +62,7 @@ Dashboard
 
     <div class="col-md-4 mb-4">
 
-        <a
-            href="{% url 'messaging:inbox' %}"
-            class="text-decoration-none">
+        <a href="{% url 'messaging:inbox' %}" class="text-decoration-none">
 
             <div class="card shadow-sm h-100">
 
@@ -84,15 +74,93 @@ Dashboard
                         Total Messages
                     </h5>
 
-                    <h2>
-                        {{ total_messages }}
-                    </h2>
+                    <h2>{{ total_messages }}</h2>
 
                 </div>
 
             </div>
 
         </a>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <strong>Recent Projects</strong>
+
+            </div>
+
+            <div class="list-group list-group-flush">
+
+                {% for project in recent_projects %}
+
+                    <a
+                        href="{% url 'projects:detail' project.pk %}"
+                        class="list-group-item list-group-item-action">
+
+                        {{ project.title }}
+
+                    </a>
+
+                {% empty %}
+
+                    <div class="list-group-item">
+
+                        No projects yet.
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <strong>Recent Messages</strong>
+
+            </div>
+
+            <div class="list-group list-group-flush">
+
+                {% for message in recent_messages %}
+
+                    <a
+                        href="{% url 'messaging:detail' message.pk %}"
+                        class="list-group-item list-group-item-action">
+
+                        {{ message.subject }}
+
+                    </a>
+
+                {% empty %}
+
+                    <div class="list-group-item">
+
+                        No messages yet.
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
 
     </div>
 

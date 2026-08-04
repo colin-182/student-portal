@@ -20,10 +20,20 @@ def home(request):
         recipient=request.user,
     ).count()
 
+    recent_projects = Project.objects.filter(
+        owner=request.user,
+    ).order_by("-created_at")[:5]
+
+    recent_messages = Message.objects.filter(
+        recipient=request.user,
+    ).order_by("-sent_at")[:5]
+
     context = {
         "project_count": project_count,
         "unread_messages": unread_messages,
         "total_messages": total_messages,
+        "recent_projects": recent_projects,
+        "recent_messages": recent_messages,
     }
 
     return render(
