@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Inbox
+{% endblock %}
+
+{% block content %}
+
+<h1>Inbox</h1>
+
+<p>
+    <a class="btn btn-primary"
+    href="{% url 'messaging:new' %}">
+    Compose Message
+    </a>
+</p>
+
+{% if messages %}
+
+<table class="table table-striped">
+    
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>Subject</th>
+            <th>Sent</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for message in messages %}
+
+        <tr>
+            <td>{{ message.sender.username }}</td>
+            <td>{{ message.subject }}</td>
+            <td>{{ message.sent_at|date:"d M Y H:i }}</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+<p>You have no messages.</p>
+
+{% endif %}
+
+{% endblock %}

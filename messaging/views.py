@@ -1,7 +1,24 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import MessageForm
+from .models import Message
+
+
+@login_required
+def inbox(request):
+    messages = (
+        Message.objects.filter(recipient=request.user)
+        .order_by("-sent_at")
+    )
+
+    return render(
+        request,
+        "messaging/inbox.html",
+        {
+            "messages": messages,
+        },
+    )
 
 
 @login_required
@@ -14,7 +31,7 @@ def message_create(request):
             message.sender = request.user
             message.save()
 
-            return redirect("dashboard:home")
+            return redirect("messaging:inbox")
 
     else:
         form = MessageForm()
