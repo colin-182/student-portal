@@ -7,9 +7,8 @@ from .models import Message
 
 @login_required
 def inbox(request):
-    messages = (
-        Message.objects.filter(recipient=request.user)
-        .order_by("-sent_at")
+    messages = Message.objects.filter(
+        recipient=request.user
     )
 
     return render(
@@ -28,6 +27,10 @@ def message_detail(request, pk):
         pk=pk,
         recipient=request.user,
     )
+
+    if not message.is_read:
+        message.is_read = True
+        message.save()
 
     return render(
         request,
