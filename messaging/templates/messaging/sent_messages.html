@@ -43,6 +43,7 @@ Sent Messages
             <th>To</th>
             <th>Subject</th>
             <th>Sent</th>
+            <th>Status</th>
 
         </tr>
 
@@ -56,9 +57,33 @@ Sent Messages
 
             <td>{{ message.recipient.username }}</td>
 
-            <td>{{ message.subject }}</td>
+            <td>
+
+                <a href="{% url 'messaging:detail' message.pk %}">
+                    {{ message.subject }}
+                </a>
+
+            </td>
 
             <td>{{ message.sent_at|date:"d M Y H:i" }}</td>
+
+            <td>
+
+                {% if message.is_read %}
+
+                    <span class="badge bg-success">
+                        Read
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-warning text-dark">
+                        Unread
+                    </span>
+
+                {% endif %}
+
+            </td>
 
         </tr>
 

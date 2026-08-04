@@ -16,6 +16,11 @@
 </p>
 
 <p>
+    <strong>To:</strong>
+    {{ message.recipient.username }}
+</p>
+
+<p>
     <strong>Sent:</strong>
     {{ message.sent_at|date:"d M Y H:i" }}
 </p>
@@ -30,29 +35,33 @@
 
 <div class="mt-3">
 
+    {% if request.user == message.recipient %}
+
+        <a
+            href="{% url 'messaging:new' %}?recipient={{ message.sender.id }}&subject=Re: {{ message.subject }}"
+            class="btn btn-primary">
+
+            Reply
+
+        </a>
+
+        <a
+            href="{% url 'messaging:delete' message.pk %}"
+            class="btn btn-danger">
+
+            Delete
+
+        </a>
+
+    {% endif %}
+
     <a
-        href="{% url 'messaging:new' %}?recipient={{ message.sender.id }}&subject=Re: {{ message.subject }}"
-        class="btn btn-primary">
-
-        Reply
-
-    </a>
-
-    <a
-        href="{% url 'messaging:inbox' %}"
+        href="{% if request.user == message.recipient %}{% url 'messaging:inbox' %}{% else %}{% url 'messaging:sent' %}{% endif %}"
         class="btn btn-secondary">
 
-        Back to Inbox
+        Back
 
     </a>
-
-    <a
-    href="{% url 'messaging:delete' message.pk %}"
-    class="btn btn-danger">
-
-    Delete
-
-</a>
 
 </div>
 
