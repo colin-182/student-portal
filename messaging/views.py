@@ -22,6 +22,23 @@ def inbox(request):
 
 
 @login_required
+def message_detail(request, pk):
+    message = get_object_or_404(
+        Message,
+        pk=pk,
+        recipient=request.user,
+    )
+
+    return render(
+        request,
+        "messaging/message_detail.html",
+        {
+            "message": message,
+        },
+    )
+
+
+@login_required
 def message_create(request):
     if request.method == "POST":
         form = MessageForm(request.POST)

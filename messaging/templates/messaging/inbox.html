@@ -10,15 +10,15 @@ Inbox
 
 <p>
     <a class="btn btn-primary"
-    href="{% url 'messaging:new' %}">
-    Compose Message
+       href="{% url 'messaging:new' %}">
+        Compose Message
     </a>
 </p>
 
 {% if messages %}
 
 <table class="table table-striped">
-    
+
     <thead>
         <tr>
             <th>From</th>
@@ -29,16 +29,30 @@ Inbox
 
     <tbody>
 
-        {% for message in messages %}
+    {% for message in messages %}
 
         <tr>
-            <td>{{ message.sender.username }}</td>
-            <td>{{ message.subject }}</td>
-            <td>{{ message.sent_at|date:"d M Y H:i }}</td>
+
+            <td>
+                {{ message.sender.username }}
+            </td>
+
+            <td>
+                <a href="{% url 'messaging:detail' message.pk %}">
+                    {{ message.subject }}
+                </a>
+            </td>
+
+            <td>
+                {{ message.sent_at|date:"d M Y H:i" }}
+            </td>
+
         </tr>
 
-        {% endfor %}
+    {% endfor %}
+
     </tbody>
+
 </table>
 
 {% else %}
