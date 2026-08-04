@@ -1,9 +1,8 @@
 from django.urls import path
+
 from . import views
 
 app_name = "messaging"
-
-print("=== LOADING MESSAGING URLS ===")
 
 urlpatterns = [
     path("", views.inbox, name="inbox"),
