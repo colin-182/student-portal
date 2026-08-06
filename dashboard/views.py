@@ -41,3 +41,32 @@ def home(request):
         "dashboard/home.html",
         context,
     )
+
+
+@login_required
+def profile(request):
+
+    context = {
+        "project_count": Project.objects.filter(
+            owner=request.user,
+        ).count(),
+
+        "messages_sent": Message.objects.filter(
+            sender=request.user,
+        ).count(),
+
+        "messages_received": Message.objects.filter(
+            recipient=request.user,
+        ).count(),
+
+        "unread_messages": Message.objects.filter(
+            recipient=request.user,
+            is_read=False,
+        ).count(),
+    }
+
+    return render(
+        request,
+        "dashboard/profile.html",
+        context,
+    )

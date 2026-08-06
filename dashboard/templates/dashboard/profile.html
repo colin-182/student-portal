@@ -7,13 +7,88 @@ Profile
 {% block content %}
 
 <h1 class="mb-4">
-    Profile
+    My Profile
 </h1>
 
-<div class="card shardow-sm">
+<div class="card shadow-sm">
+
     <div class="card-body">
-        <p>Your user profile will appear here.</p>
+
+        <table class="table">
+
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email|default:"Not provided" }}</td>
+            </tr>
+
+            <tr>
+                <th>Date Joined</th>
+                <td>{{ user.date_joined|date:"d M Y" }}</td>
+            </tr>
+
+            <tr>
+                <th>Projects</th>
+                <td>{{ project_count }}</td>
+            </tr>
+
+            <tr>
+                <th>Messages Sent</th>
+                <td>{{ messages_sent }}</td>
+            </tr>
+
+            <tr>
+                <th>Messages Received</th>
+                <td>{{ messages_received }}</td>
+            </tr>
+
+            <tr>
+                <th>Unread Messages</th>
+                <td>{{ unread_messages }}</td>
+            </tr>
+
+            <tr>
+                <th>Staff</th>
+                <td>
+
+                    {% if user.is_staff %}
+
+                        Yes
+
+                    {% else %}
+
+                        No
+
+                    {% endif %}
+
+                </td>
+            </tr>
+
+            <tr>
+                <th>Superuser</th>
+                <td>
+
+                    {% if user.is_superuser %}
+
+                        Yes
+
+                    {% else %}
+
+                        No
+
+                    {% endif %}
+
+                </td>
+            </tr>
+
+        </table>
+
     </div>
+
 </div>
 
 {% endblock %}

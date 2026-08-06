@@ -34,14 +34,17 @@
     </li>
 
     <li class="nav-item">
-        <a
-            class="nav-link"
-            href="#">
 
-            <i class="bi bi-person-circle"></i>
-            Profile
+    <a
+        class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+        href="{% url 'dashboard:profile' %}">
 
-        </a>
-    </li>
+        <i class="bi bi-person-circle"></i>
+
+        Profile
+
+    </a>
+
+</li>
 
 </ul>
