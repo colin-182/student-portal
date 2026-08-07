@@ -5,9 +5,39 @@ from . import views
 app_name = "messaging"
 
 urlpatterns = [
-    path("", views.inbox, name="inbox"),
-    path("sent/", views.sent_messages, name="sent"),
-    path("new/", views.message_create, name="new"),
-    path("<int:pk>/", views.message_detail, name="detail"),
-    path("<int:pk>/delete/", views.message_delete, name="delete"),
+    path(
+        "",
+        views.inbox,
+        name="inbox",
+    ),
+
+    path(
+        "sent/",
+        views.sent_messages,
+        name="sent",
+    ),
+
+    path(
+        "new/",
+        views.message_create,
+        name="new",
+    ),
+
+    path(
+        "<int:pk>/",
+        views.message_detail,
+        name="detail",
+    ),
+
+    path(
+        "<int:pk>/reply/",
+        views.message_reply,
+        name="reply",
+    ),
+
+    path(
+        "<int:pk>/delete/",
+        views.message_delete,
+        name="delete",
+    ),
 ]

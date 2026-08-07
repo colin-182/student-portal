@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Q
 
 from .forms import MessageForm
 from .models import Message
@@ -42,12 +43,16 @@ def sent_messages(request):
 def message_detail(request, pk):
 
     message = get_object_or_404(
-        Message,
+        Message.objects.filter(
+            Q(recipient=request.user) |
+            Q(sender=request.user)
+        ),
         pk=pk,
-        recipient=request.user,
     )
 
-    if not message.is_read:
+    is_sender = message.sender == request.user
+
+    if not is_sender and not message.is_read:
         message.is_read = True
         message.save()
 
@@ -56,6 +61,7 @@ def message_detail(request, pk):
         "messaging/message_detail.html",
         {
             "message": message,
+            "is_sender": is_sender,
         },
     )
 
