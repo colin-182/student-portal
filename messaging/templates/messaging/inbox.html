@@ -32,7 +32,7 @@ Inbox
 
 </div>
 
-{% if messages %}
+{% if inbox_messages %}
 
 <table class="table table-hover">
 
@@ -51,7 +51,7 @@ Inbox
 
     <tbody>
 
-    {% for message in messages %}
+    {% for message in inbox_messages %}
 
         <tr>
 
@@ -72,13 +72,17 @@ Inbox
                 {% if message.is_read %}
 
                     <span class="badge bg-success">
+
                         Read
+
                     </span>
 
                 {% else %}
 
                     <span class="badge bg-warning text-dark">
+
                         Unread
+
                     </span>
 
                 {% endif %}
