@@ -1,69 +1,59 @@
-<div class="sidebar-inner">
+<ul class="nav flex-column">
 
-    <h6 class="sidebar-heading">
+    <li class="nav-item">
 
-        Navigation
+        <a
+            class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            href="{% url 'dashboard:home' %}">
 
-    </h6>
+            <i class="bi bi-speedometer2"></i>
 
-    <ul class="nav flex-column">
+            Dashboard
 
-        <li class="nav-item">
+        </a>
 
-            <a
-                class="nav-link {% if request.resolver_match.app_name == 'dashboard' %}active{% endif %}"
-                href="{% url 'dashboard:home' %}">
+    </li>
 
-                <i class="bi bi-speedometer2"></i>
+    <li class="nav-item">
 
-                Dashboard
+        <a
+            class="nav-link {% if request.resolver_match.app_name == 'projects' %}active{% endif %}"
+            href="{% url 'projects:list' %}">
 
-            </a>
+            <i class="bi bi-folder"></i>
 
-        </li>
+            Projects
 
-        <li class="nav-item">
+        </a>
 
-            <a
-                class="nav-link {% if request.resolver_match.app_name == 'projects' %}active{% endif %}"
-                href="{% url 'projects:list' %}">
+    </li>
 
-                <i class="bi bi-folder"></i>
+    <li class="nav-item">
 
-                Projects
+        <a
+            class="nav-link {% if request.resolver_match.app_name == 'messaging' %}active{% endif %}"
+            href="{% url 'messaging:inbox' %}">
 
-            </a>
+            <i class="bi bi-chat-dots"></i>
 
-        </li>
+            Messages
 
-        <li class="nav-item">
+        </a>
 
-            <a
-                class="nav-link {% if request.resolver_match.app_name == 'messaging' %}active{% endif %}"
-                href="{% url 'messaging:inbox' %}">
+    </li>
 
-                <i class="bi bi-chat-dots"></i>
+    <li class="nav-item">
 
-                Messages
+        <a
+            class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+            href="{% url 'dashboard:profile' %}">
 
-            </a>
+            <i class="bi bi-person-circle"></i>
 
-        </li>
+            Profile
 
-        <li class="nav-item">
+        </a>
 
-            <a
-                class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-                href="{% url 'dashboard:profile' %}">
+    </li>
 
-                <i class="bi bi-person-circle"></i>
-
-                Profile
-
-            </a>
-
-        </li>
-
-    </ul>
-
-</div>
+</ul>

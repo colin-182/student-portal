@@ -1,4 +1,23 @@
 /* ==========================================
+   Colour Palette
+========================================== */
+
+:root {
+
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+
+    --background: #f8fafc;
+    --card: #ffffff;
+
+    --border: #e5e7eb;
+
+    --text: #1f2937;
+    --text-muted: #6b7280;
+
+}
+
+/* ==========================================
    Global
 ========================================== */
 
@@ -8,8 +27,20 @@ body {
 }
 
 body {
-    background-color: #f8f9fa;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
     margin: 0;
+
 }
 
 /* ==========================================
@@ -17,18 +48,31 @@ body {
 ========================================== */
 
 .navbar {
-    min-height: 70px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    z-index: 1030;
+
+    min-height: 64px;
+
+    background: var(--primary) !important;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,.08);
+
 }
 
 .navbar-brand {
-    font-size: 1.35rem;
-    font-weight: 700;
+
+    font-size: 1.2rem;
+
+    font-weight: 600;
+
+    letter-spacing: .2px;
+
 }
 
 .navbar-text {
-    color: rgba(255, 255, 255, 0.9);
+
+    color:
+        rgba(255,255,255,.9);
+
 }
 
 /* ==========================================
@@ -36,59 +80,116 @@ body {
 ========================================== */
 
 .sidebar {
-    background: #ffffff;
-    border-right: 1px solid #dee2e6;
-    min-height: calc(100vh - 70px);
+
+    background: white;
+
+    border-right:
+        1px solid var(--border);
+
+    min-height: calc(100vh - 64px);
+
 }
 
 .sidebar-inner {
-    padding: 1.5rem 1rem;
-}
 
-.sidebar-heading {
-    color: #6c757d;
-    text-transform: uppercase;
-    letter-spacing: .08rem;
-    font-size: .75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    padding: 1.5rem 1rem;
+
 }
 
 .nav-link {
-    color: #495057;
-    padding: .8rem 1rem;
-    border-radius: .5rem;
-    margin-bottom: .35rem;
-    transition: all .2s ease;
+
+    color: var(--text-muted);
+
+    border-radius: 12px;
+
+    padding: .85rem 1rem;
+
+    margin-bottom: .45rem;
+
+    transition:
+        all .25s ease;
+
     font-weight: 500;
+
 }
 
 .nav-link:hover {
-    background: #e9ecef;
-    color: #0d6efd;
+
+    background:
+        var(--primary-light);
+
+    color:
+        var(--primary);
+
 }
 
 .nav-link.active {
-    background: #0d6efd;
-    color: #ffffff !important;
+
+    background:
+        var(--primary);
+
+    color: white !important;
+
 }
 
 .nav-link i {
-    margin-right: .65rem;
+
+    margin-right: .7rem;
+
 }
 
 /* ==========================================
-   Main Content
+   Main
 ========================================== */
 
 main {
-    min-height: calc(100vh - 70px);
+
+    min-height:
+        calc(100vh - 64px);
+
 }
 
 .content-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem;
+
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding: 2.5rem;
+
+}
+
+/* ==========================================
+   Page Titles
+========================================== */
+
+.content-wrapper h1 {
+
+    font-size: 2.2rem;
+
+    font-weight: 600;
+
+    margin-bottom: .4rem;
+
+    border: none;
+
+    padding: 0;
+
+}
+
+.content-wrapper h2 {
+
+    font-size: 1.75rem;
+
+    font-weight: 600;
+
+}
+
+.text-muted {
+
+    color:
+        var(--text-muted) !important;
+
 }
 
 /* ==========================================
@@ -96,16 +197,81 @@ main {
 ========================================== */
 
 .card {
-    border: none;
-    border-radius: .75rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
-    transition: transform .2s ease,
-                box-shadow .2s ease;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow:
+
+        0 4px 12px rgba(0,0,0,.05);
+
+    transition:
+
+        transform .25s,
+
+        box-shadow .25s,
+
+        border-color .25s;
+
 }
 
 .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--primary-light);
+
+    box-shadow:
+
+        0 14px 30px rgba(37,99,235,.12);
+
+}
+
+/* ==========================================
+   Dashboard Cards
+========================================== */
+
+.card i.fs-1 {
+
+    width: 72px;
+
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary-light);
+
+    color: var(--primary) !important;
+
+    font-size: 2rem !important;
+
+}
+
+.card h2 {
+
+    font-size: 2.3rem;
+
+    font-weight: 700;
+
+    margin-top: .4rem;
+
+}
+
+.card p {
+
+    margin-bottom: 0;
+
 }
 
 /* ==========================================
@@ -113,14 +279,36 @@ main {
 ========================================== */
 
 .table {
-    background: #ffffff;
-    border-radius: .75rem;
-    overflow: hidden;
+
+    margin-bottom: 0;
+
+    background: white;
+
 }
 
-.table thead th {
-    background: #f8f9fa;
+.table thead {
+
+    background: #f9fafb;
+
+}
+
+.table th {
+
+    border: none;
+
+    color: var(--text-muted);
+
     font-weight: 600;
+
+}
+
+.table td {
+
+    border-color:
+        #f3f4f6;
+
+    vertical-align: middle;
+
 }
 
 /* ==========================================
@@ -128,7 +316,24 @@ main {
 ========================================== */
 
 .btn {
-    border-radius: .5rem;
+
+    border-radius: 10px;
+
+    padding:
+        .55rem 1rem;
+
+    font-weight: 500;
+
+}
+
+.btn-primary {
+
+    background:
+        var(--primary);
+
+    border-color:
+        var(--primary);
+
 }
 
 /* ==========================================
@@ -136,23 +341,34 @@ main {
 ========================================== */
 
 .alert {
-    border-radius: .75rem;
+
+    border: none;
+
+    border-radius: 12px;
+
 }
 
 /* ==========================================
    Responsive
 ========================================== */
 
-@media (max-width: 991px) {
+@media (max-width:991px) {
 
     .sidebar {
+
         min-height: auto;
+
         border-right: none;
-        border-bottom: 1px solid #dee2e6;
+
+        border-bottom:
+            1px solid var(--border);
+
     }
 
     .content-wrapper {
+
         padding: 1.5rem;
+
     }
 
 }

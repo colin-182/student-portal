@@ -6,27 +6,59 @@ Dashboard
 
 {% block content %}
 
-<h1 class="mb-4">
-    Dashboard
-</h1>
+<div class="mb-5">
 
-<div class="row">
+    <h1>Dashboard</h1>
 
-    <div class="col-md-4 mb-4">
+    <p class="text-muted mb-0">
 
-        <a href="{% url 'projects:list' %}" class="text-decoration-none">
+        Manage your projects and keep track of your messages.
 
-            <div class="card shadow-sm h-100">
+    </p>
 
-                <div class="card-body text-center">
+</div>
 
-                    <i class="bi bi-folder display-4 text-primary"></i>
+<div class="row g-4 mb-5">
 
-                    <h5 class="mt-3">
-                        Projects
-                    </h5>
+    <!-- Projects Card -->
 
-                    <h2>{{ project_count }}</h2>
+    <div class="col-lg-4">
+
+        <a
+            href="{% url 'projects:list' %}"
+            class="text-decoration-none text-dark">
+
+            <div class="card h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+
+                                Active Projects
+
+                            </p>
+
+                            <h2 class="mb-2">
+
+                                {{ project_count }}
+
+                            </h2>
+
+                            <small class="text-primary fw-semibold">
+
+                                View all projects →
+
+                            </small>
+
+                        </div>
+
+                        <i class="bi bi-folder-fill fs-1"></i>
+
+                    </div>
 
                 </div>
 
@@ -36,21 +68,45 @@ Dashboard
 
     </div>
 
-    <div class="col-md-4 mb-4">
+    <!-- Messages Card -->
 
-        <a href="{% url 'messaging:inbox' %}" class="text-decoration-none">
+    <div class="col-lg-4">
 
-            <div class="card shadow-sm h-100">
+        <a
+            href="{% url 'messaging:inbox' %}"
+            class="text-decoration-none text-dark">
 
-                <div class="card-body text-center">
+            <div class="card h-100">
 
-                    <i class="bi bi-chat-dots display-4 text-success"></i>
+                <div class="card-body p-4">
 
-                    <h5 class="mt-3">
-                        Unread Messages
-                    </h5>
+                    <div class="d-flex justify-content-between align-items-start">
 
-                    <h2>{{ unread_messages }}</h2>
+                        <div>
+
+                            <p class="text-muted mb-2">
+
+                                Unread Messages
+
+                            </p>
+
+                            <h2 class="mb-2">
+
+                                {{ unread_messages }}
+
+                            </h2>
+
+                            <small class="text-primary fw-semibold">
+
+                                Open inbox →
+
+                            </small>
+
+                        </div>
+
+                        <i class="bi bi-chat-dots-fill fs-1"></i>
+
+                    </div>
 
                 </div>
 
@@ -60,21 +116,45 @@ Dashboard
 
     </div>
 
-    <div class="col-md-4 mb-4">
+    <!-- Profile Card -->
 
-        <a href="{% url 'messaging:inbox' %}" class="text-decoration-none">
+    <div class="col-lg-4">
 
-            <div class="card shadow-sm h-100">
+        <a
+            href="{% url 'dashboard:profile' %}"
+            class="text-decoration-none text-dark">
 
-                <div class="card-body text-center">
+            <div class="card h-100">
 
-                    <i class="bi bi-envelope display-4 text-warning"></i>
+                <div class="card-body p-4">
 
-                    <h5 class="mt-3">
-                        Total Messages
-                    </h5>
+                    <div class="d-flex justify-content-between align-items-start">
 
-                    <h2>{{ total_messages }}</h2>
+                        <div>
+
+                            <p class="text-muted mb-2">
+
+                                Total Messages
+
+                            </p>
+
+                            <h2 class="mb-2">
+
+                                {{ total_messages }}
+
+                            </h2>
+
+                            <small class="text-primary fw-semibold">
+
+                                View profile →
+
+                            </small>
+
+                        </div>
+
+                        <i class="bi bi-person-circle fs-1"></i>
+
+                    </div>
 
                 </div>
 
@@ -86,15 +166,23 @@ Dashboard
 
 </div>
 
-<div class="row">
+<div class="row g-4">
+
+    <!-- Recent Projects -->
 
     <div class="col-lg-6">
 
-        <div class="card shadow-sm mb-4">
+        <div class="card h-100">
 
-            <div class="card-header">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
 
-                <strong>Recent Projects</strong>
+                <h5 class="mb-0">
+
+                    <i class="bi bi-folder2-open text-primary me-2"></i>
+
+                    Recent Projects
+
+                </h5>
 
             </div>
 
@@ -104,17 +192,21 @@ Dashboard
 
                     <a
                         href="{% url 'projects:detail' project.pk %}"
-                        class="list-group-item list-group-item-action">
+                        class="list-group-item list-group-item-action border-0 px-4 py-3">
 
-                        {{ project.title }}
+                        <strong>
+
+                            {{ project.title }}
+
+                        </strong>
 
                     </a>
 
                 {% empty %}
 
-                    <div class="list-group-item">
+                    <div class="list-group-item border-0 px-4 py-3 text-muted">
 
-                        No projects yet.
+                        No projects available.
 
                     </div>
 
@@ -126,13 +218,21 @@ Dashboard
 
     </div>
 
+    <!-- Recent Messages -->
+
     <div class="col-lg-6">
 
-        <div class="card shadow-sm mb-4">
+        <div class="card h-100">
 
-            <div class="card-header">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
 
-                <strong>Recent Messages</strong>
+                <h5 class="mb-0">
+
+                    <i class="bi bi-chat-left-text text-primary me-2"></i>
+
+                    Recent Messages
+
+                </h5>
 
             </div>
 
@@ -142,17 +242,29 @@ Dashboard
 
                     <a
                         href="{% url 'messaging:detail' message.pk %}"
-                        class="list-group-item list-group-item-action">
+                        class="list-group-item list-group-item-action border-0 px-4 py-3">
 
-                        {{ message.subject }}
+                        <strong>
+
+                            {{ message.subject }}
+
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            From {{ message.sender.username }}
+
+                        </small>
 
                     </a>
 
                 {% empty %}
 
-                    <div class="list-group-item">
+                    <div class="list-group-item border-0 px-4 py-3 text-muted">
 
-                        No messages yet.
+                        No messages available.
 
                     </div>
 
