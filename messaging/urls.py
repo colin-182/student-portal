@@ -18,6 +18,12 @@ urlpatterns = [
     ),
 
     path(
+        "archived/",
+        views.archived_messages,
+        name="archived",
+    ),
+
+    path(
         "new/",
         views.message_create,
         name="new",
@@ -33,6 +39,18 @@ urlpatterns = [
         "<int:pk>/reply/",
         views.message_reply,
         name="reply",
+    ),
+
+    path(
+        "<int:pk>/archive/",
+        views.archive_message,
+        name="archive",
+    ),
+
+    path(
+        "<int:pk>/restore/",
+        views.restore_message,
+        name="restore",
     ),
 
     path(
