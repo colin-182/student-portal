@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Message(models.Model):
+
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -15,13 +16,23 @@ class Message(models.Model):
         related_name="received_messages",
     )
 
-    subject = models.CharField(max_length=200)
+    subject = models.CharField(
+        max_length=200,
+    )
 
     body = models.TextField()
 
-    sent_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(
+        auto_now_add=True,
+    )
 
-    is_read = models.BooleanField(default=False)
+    is_read = models.BooleanField(
+        default=False,
+    )
+
+    is_archived = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         ordering = ["-sent_at"]
