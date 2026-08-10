@@ -6,61 +6,196 @@
 
 {% block content %}
 
-<h1 class="mb-4">
-    {{ project.title }}
-</h1>
+<div class="container-fluid px-0">
 
-<div class="card">
+    <!-- Page Header -->
 
-    <div class="card-body">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-        <p>
-            <strong>Description:</strong><br>
-            {{ project.description }}
-        </p>
+        <div>
 
-        <p>
-            <strong>Status:</strong>
-            {{ project.get_status_display }}
-        </p>
+            <h1 class="mb-1 fw-semibold">
+                {{ project.title }}
+            </h1>
 
-        <p>
-            <strong>Deadline:</strong>
-            {{ project.deadline }}
-        </p>
+            <p class="text-muted mb-0">
+                Project details and information.
+            </p>
 
-        <p>
-            <strong>Created:</strong>
-            {{ project.created_at }}
-        </p>
+        </div>
+
+        {% if request.user == project.owner %}
+
+            <div class="d-flex gap-2">
+
+                <a
+                    href="{% url 'projects:update' project.pk %}"
+                    class="btn btn-primary">
+
+                    <i class="bi bi-pencil me-2"></i>
+
+                    Edit Project
+
+                </a>
+
+                <a
+                    href="{% url 'projects:delete' project.pk %}"
+                    class="btn btn-outline-danger">
+
+                    <i class="bi bi-trash me-2"></i>
+
+                    Delete
+
+                </a>
+
+            </div>
+
+        {% endif %}
 
     </div>
 
-</div>
 
-<div class="mt-4">
+    <!-- Project Details -->
 
-    {% if request.user == project.owner %}
+    <div class="row justify-content-center">
 
-        <a
-            href="{% url 'projects:update' project.pk %}"
-            class="btn btn-primary">
-            Edit Project
-        </a>
+        <div class="col-12 col-xl-9">
 
-        <a
-            href="{% url 'projects:delete' project.pk %}"
-            class="btn btn-danger">
-            Delete Project
-        </a>
+            <div class="card shadow-sm">
 
-    {% endif %}
+                <div class="card-body p-4 p-md-5">
 
-    <a
-        href="{% url 'projects:list' %}"
-        class="btn btn-secondary">
-        Back to Projects
-    </a>
+                    <!-- Project Information -->
+
+                    <div class="row g-4">
+
+                        <div class="col-md-8">
+
+                            <div class="text-muted small mb-1">
+                                Description
+                            </div>
+
+                            {% if project.description %}
+
+                                <div>
+                                    {{ project.description|linebreaks }}
+                                </div>
+
+                            {% else %}
+
+                                <div class="text-muted">
+                                    No description provided.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="text-muted small mb-1">
+                                Status
+                            </div>
+
+                            {% if project.status == "PL" %}
+
+                                <span class="badge bg-secondary-subtle text-secondary-emphasis">
+
+                                    {{ project.get_status_display }}
+
+                                </span>
+
+                            {% elif project.status == "AC" %}
+
+                                <span class="badge bg-primary-subtle text-primary-emphasis">
+
+                                    {{ project.get_status_display }}
+
+                                </span>
+
+                            {% elif project.status == "CO" %}
+
+                                <span class="badge bg-success-subtle text-success-emphasis">
+
+                                    {{ project.get_status_display }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="text-muted small mb-1">
+                                Deadline
+                            </div>
+
+                            {% if project.deadline %}
+
+                                <div class="fw-semibold">
+
+                                    {{ project.deadline|date:"d M Y" }}
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="text-muted">
+                                    No deadline set.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="text-muted small mb-1">
+                                Created
+                            </div>
+
+                            <div class="fw-semibold">
+
+                                {{ project.created_at|date:"d M Y H:i" }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Footer -->
+
+                <div class="card-footer bg-transparent border-top p-3">
+
+                    <div class="d-flex justify-content-end">
+
+                        <a
+                            href="{% url 'projects:list' %}"
+                            class="btn btn-secondary">
+
+                            <i class="bi bi-arrow-left me-2"></i>
+
+                            Back to Projects
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -10,63 +10,106 @@ New Project
 
 {% block content %}
 
-<div class="mb-5">
+<div class="container-fluid px-0">
 
-    <h1>
-        {% if form.instance.pk %}
-            Edit Project
-        {% else %}
-            New Project
-        {% endif %}
-    </h1>
+    <!-- Page Header -->
 
-    <p class="text-muted mb-0">
+    <div class="mb-4">
 
-        {% if form.instance.pk %}
-            Update the details of your project.
-        {% else %}
-            Create a new project and set its deadline.
-        {% endif %}
+        <h1 class="mb-1 fw-semibold">
 
-    </p>
+            {% if form.instance.pk %}
+                Edit Project
+            {% else %}
+                New Project
+            {% endif %}
 
-</div>
+        </h1>
 
-<div class="card shadow-sm">
+        <p class="text-muted mb-0">
 
-    <div class="card-body">
+            {% if form.instance.pk %}
+                Update the details of your project.
+            {% else %}
+                Create a new project and set its deadline.
+            {% endif %}
 
-        <form method="post">
+        </p>
 
-            {% csrf_token %}
+    </div>
 
-            {{ form.as_p }}
 
-            <div class="d-flex gap-2 mt-4">
+    <!-- Project Form -->
 
-                <button
-                    type="submit"
-                    class="btn btn-primary">
+    <div class="row justify-content-center">
 
-                    {% if form.instance.pk %}
-                        Update Project
-                    {% else %}
-                        Save Project
-                    {% endif %}
+        <div class="col-12 col-lg-8 col-xl-7">
 
-                </button>
+            <div class="card shadow-sm">
 
-                <a
-                    href="{% url 'projects:list' %}"
-                    class="btn btn-secondary">
+                <div class="card-header">
 
-                    Cancel
+                    <h5 class="mb-0">
 
-                </a>
+                        {% if form.instance.pk %}
+                            Project Details
+                        {% else %}
+                            Project Details
+                        {% endif %}
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+
+                            <a
+                                href="{% url 'projects:list' %}"
+                                class="btn btn-secondary">
+
+                                <i class="bi bi-x-circle me-2"></i>
+
+                                Cancel
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+
+                                {% if form.instance.pk %}
+
+                                    <i class="bi bi-check-circle me-2"></i>
+
+                                    Update Project
+
+                                {% else %}
+
+                                    <i class="bi bi-plus-circle me-2"></i>
+
+                                    Save Project
+
+                                {% endif %}
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
 
             </div>
 
-        </form>
+        </div>
 
     </div>
 
