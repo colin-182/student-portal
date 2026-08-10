@@ -1,32 +1,84 @@
 {% extends "base.html" %}
 
 {% block title %}
-New Messages
+New Message
 {% endblock %}
 
 {% block content %}
 
-<h1 class="mb-4">
-    New Message
-</h1>
+<div class="container-fluid px-0">
 
-<form method="post">
+    <!-- Page Header -->
 
-    {% csrf_token %}
+    <div class="mb-4">
 
-    {{ form.as_p }}
+        <h1 class="mb-1 fw-semibold">
+            New Message
+        </h1>
 
-    <button
-        class="btn btn-primary"
-        type="submit">
-    Send Message
-    </button>
+        <p class="text-muted mb-0">
+            Send a message to another user.
+        </p>
 
-    <a 
-        class="btn btn-secondary"
-        href="{% url 'dashboard:home' %}">
-    Cancel
-    </a>
-</form>
+    </div>
+
+
+    <!-- Message Form -->
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-lg-8 col-xl-7">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+                        Message Details
+                    </h5>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+
+                            <a
+                                href="{% url 'messaging:inbox' %}"
+                                class="btn btn-secondary">
+
+                                Cancel
+
+                            </a>
+
+                            <button
+                                class="btn btn-primary"
+                                type="submit">
+
+                                <i class="bi bi-send me-2"></i>
+
+                                Send Message
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
