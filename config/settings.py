@@ -150,3 +150,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "dashboard:home"
 
 LOGOUT_REDIRECT_URL = "login"
+
+# --------------------------------------------------
+# Email
+# --------------------------------------------------
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@studentportal.local"
