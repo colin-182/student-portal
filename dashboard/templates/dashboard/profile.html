@@ -6,86 +6,209 @@ Profile
 
 {% block content %}
 
-<h1 class="mb-4">
-    My Profile
-</h1>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
 
-<div class="card shadow-sm">
+    <div>
+
+        <h1>My Profile</h1>
+
+        <p class="text-muted mb-0">
+            View your account information and activity.
+        </p>
+
+    </div>
+
+    <a
+        href="{% url 'dashboard:profile_edit' %}"
+        class="btn btn-primary">
+
+        <i class="bi bi-pencil me-2"></i>
+
+        Edit Profile
+
+    </a>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+
+        <h5 class="mb-0">
+            Account Information
+        </h5>
+
+    </div>
 
     <div class="card-body">
 
-        <table class="table">
+        <div class="table-responsive">
 
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
+            <table class="table table-borderless align-middle mb-0">
 
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email|default:"Not provided" }}</td>
-            </tr>
+                <tbody>
 
-            <tr>
-                <th>Date Joined</th>
-                <td>{{ user.date_joined|date:"d M Y" }}</td>
-            </tr>
+                    <tr>
 
-            <tr>
-                <th>Projects</th>
-                <td>{{ project_count }}</td>
-            </tr>
+                        <th style="width: 30%;">
+                            Username
+                        </th>
 
-            <tr>
-                <th>Messages Sent</th>
-                <td>{{ messages_sent }}</td>
-            </tr>
+                        <td>
+                            {{ user.username }}
+                        </td>
 
-            <tr>
-                <th>Messages Received</th>
-                <td>{{ messages_received }}</td>
-            </tr>
+                    </tr>
 
-            <tr>
-                <th>Unread Messages</th>
-                <td>{{ unread_messages }}</td>
-            </tr>
+                    <tr>
 
-            <tr>
-                <th>Staff</th>
-                <td>
+                        <th>
+                            Email
+                        </th>
 
-                    {% if user.is_staff %}
+                        <td>
+                            {{ user.email|default:"Not provided" }}
+                        </td>
 
-                        Yes
+                    </tr>
 
-                    {% else %}
+                    <tr>
 
-                        No
+                        <th>
+                            Date Joined
+                        </th>
 
-                    {% endif %}
+                        <td>
+                            {{ user.date_joined|date:"d M Y" }}
+                        </td>
 
-                </td>
-            </tr>
+                    </tr>
 
-            <tr>
-                <th>Superuser</th>
-                <td>
+                    <tr>
 
-                    {% if user.is_superuser %}
+                        <th>
+                            Staff
+                        </th>
 
-                        Yes
+                        <td>
 
-                    {% else %}
+                            {% if user.is_staff %}
 
-                        No
+                                <span class="badge bg-success">
+                                    Yes
+                                </span>
 
-                    {% endif %}
+                            {% else %}
 
-                </td>
-            </tr>
+                                <span class="badge bg-secondary">
+                                    No
+                                </span>
 
-        </table>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+                            Superuser
+                        </th>
+
+                        <td>
+
+                            {% if user.is_superuser %}
+
+                                <span class="badge bg-success">
+                                    Yes
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+                                    No
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+
+        <h5 class="mb-0">
+            Account Activity
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="text-muted small">
+                    Projects
+                </div>
+
+                <div class="fs-3 fw-semibold">
+                    {{ project_count }}
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="text-muted small">
+                    Messages Sent
+                </div>
+
+                <div class="fs-3 fw-semibold">
+                    {{ messages_sent }}
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="text-muted small">
+                    Messages Received
+                </div>
+
+                <div class="fs-3 fw-semibold">
+                    {{ messages_received }}
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="text-muted small">
+                    Unread Messages
+                </div>
+
+                <div class="fs-3 fw-semibold">
+                    {{ unread_messages }}
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

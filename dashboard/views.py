@@ -1,12 +1,16 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from messaging.models import Message
 from projects.models import Project
 
+from .forms import ProfileUpdateForm
+
 
 @login_required
 def home(request):
+
     project_count = Project.objects.filter(
         owner=request.user,
     ).count()
@@ -69,4 +73,42 @@ def profile(request):
         request,
         "dashboard/profile.html",
         context,
+    )
+
+
+@login_required
+def profile_edit(request):
+
+    if request.method == "POST":
+
+        form = ProfileUpdateForm(
+            request.POST,
+            instance=request.user,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Your profile has been updated successfully.",
+            )
+
+            return redirect(
+                "dashboard:profile",
+            )
+
+    else:
+
+        form = ProfileUpdateForm(
+            instance=request.user,
+        )
+
+    return render(
+        request,
+        "dashboard/profile_edit.html",
+        {
+            "form": form,
+        },
     )
