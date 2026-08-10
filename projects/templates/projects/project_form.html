@@ -1,33 +1,75 @@
 {% extends "base.html" %}
 
 {% block title %}
+{% if form.instance.pk %}
+Edit Project
+{% else %}
 New Project
+{% endif %}
 {% endblock %}
 
 {% block content %}
 
-<h1 class="mb-4">
-    New Project
-</h1>
+<div class="mb-5">
+
+    <h1>
+        {% if form.instance.pk %}
+            Edit Project
+        {% else %}
+            New Project
+        {% endif %}
+    </h1>
+
+    <p class="text-muted mb-0">
+
+        {% if form.instance.pk %}
+            Update the details of your project.
+        {% else %}
+            Create a new project and set its deadline.
+        {% endif %}
+
+    </p>
+
+</div>
 
 <div class="card shadow-sm">
+
     <div class="card-body">
+
         <form method="post">
 
             {% csrf_token %}
 
-            {{form.as_p}}
+            {{ form.as_p }}
 
-            <button type="submit" class="btn btn-primary">
-                Save Project
-            </button>
+            <div class="d-flex gap-2 mt-4">
 
-            <a href="{% url 'projects:list' %}"
-            class="btn btn-secondary">
-            Cancel
-            </a>
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    {% if form.instance.pk %}
+                        Update Project
+                    {% else %}
+                        Save Project
+                    {% endif %}
+
+                </button>
+
+                <a
+                    href="{% url 'projects:list' %}"
+                    class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
         </form>
+
     </div>
+
 </div>
 
 {% endblock %}
