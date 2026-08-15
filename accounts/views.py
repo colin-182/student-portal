@@ -5,7 +5,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
-from .forms import RegisterForm
+from .forms import ProfileForm, RegisterForm
 
 
 def register(request):
@@ -45,11 +45,63 @@ def register(request):
     )
 
 
+@login_required
+def profile(request):
+
+    return render(
+        request,
+        "registration/profile.html",
+        {
+            "profile_user": request.user,
+        },
+    )
+
+
+@login_required
+def profile_edit(request):
+
+    if request.method == "POST":
+
+        form = ProfileForm(
+            request.POST,
+            instance=request.user,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Your profile has been updated successfully.",
+            )
+
+            return redirect(
+                "accounts:profile",
+            )
+
+    else:
+
+        form = ProfileForm(
+            instance=request.user,
+        )
+
+    return render(
+        request,
+        "registration/profile_edit.html",
+        {
+            "form": form,
+        },
+    )
+
+
 class CustomPasswordChangeView(PasswordChangeView):
 
     template_name = "registration/password_change.html"
 
-    success_url = reverse_lazy("accounts:password_change_done")
+    success_url = reverse_lazy(
+        "accounts:password_change_done",
+    )
 
     def form_valid(self, form):
 

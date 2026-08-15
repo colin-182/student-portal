@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+
 class Project(models.Model):
+
     class Status(models.TextChoices):
-        PLANNING = 'PL', "Planning"
+        PLANNING = "PL", "Planning"
         ACTIVE = "AC", "Active"
         COMPLETED = "CO", "Completed"
 
@@ -25,8 +27,17 @@ class Project(models.Model):
         default=Status.PLANNING,
     )
 
-    deadline = models.DateField(
+    start_date = models.DateField(
         null=True,
+        blank=True,
+    )
+
+    end_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    stakeholders = models.TextField(
         blank=True,
     )
 
@@ -36,6 +47,6 @@ class Project(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-    
+
     def __str__(self):
         return self.title
