@@ -6,163 +6,207 @@
 
 {% block content %}
 
-<div class="container-fluid px-0">
+<!-- Page Header -->
 
-    <!-- Page Header -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
 
-        <div>
+        <h1 class="mb-1 fw-semibold">
+            {{ project.title }}
+        </h1>
 
-            <h1 class="mb-1 fw-semibold">
-                {{ project.title }}
-            </h1>
-
-            <p class="text-muted mb-0">
-                Project details and information.
-            </p>
-
-        </div>
-
-        {% if request.user == project.owner %}
-
-            <div class="d-flex gap-2">
-
-                <a
-                    href="{% url 'projects:update' project.pk %}"
-                    class="btn btn-primary">
-
-                    <i class="bi bi-pencil me-2"></i>
-
-                    Edit Project
-
-                </a>
-
-                <a
-                    href="{% url 'projects:delete' project.pk %}"
-                    class="btn btn-outline-danger">
-
-                    <i class="bi bi-trash me-2"></i>
-
-                    Delete
-
-                </a>
-
-            </div>
-
-        {% endif %}
+        <p class="text-muted mb-0">
+            Project details and information.
+        </p>
 
     </div>
 
+    {% if request.user == project.owner %}
 
-    <!-- Project Details -->
+        <div class="d-flex gap-2">
 
-    <div class="row justify-content-center">
+            <a
+                href="{% url 'projects:update' project.pk %}"
+                class="btn btn-primary">
 
-        <div class="col-12 col-xl-9">
+                <i class="bi bi-pencil me-2"></i>
 
-            <div class="card shadow-sm">
+                Edit Project
 
-                <div class="card-body p-4 p-md-5">
+            </a>
 
-                    <!-- Project Information -->
+            <a
+                href="{% url 'projects:delete' project.pk %}"
+                class="btn btn-outline-danger">
 
-                    <div class="row g-4">
+                <i class="bi bi-trash me-2"></i>
 
-                        <div class="col-md-8">
+                Delete
 
-                            <div class="text-muted small mb-1">
-                                Description
-                            </div>
+            </a>
 
-                            {% if project.description %}
+        </div>
 
-                                <div>
-                                    {{ project.description|linebreaks }}
-                                </div>
+    {% endif %}
 
-                            {% else %}
+</div>
 
-                                <div class="text-muted">
-                                    No description provided.
-                                </div>
 
-                            {% endif %}
+<!-- Project Details -->
 
+<div class="row justify-content-center">
+
+    <div class="col-12 col-xl-9">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Project Information -->
+
+                <div class="row g-4">
+
+                    <div class="col-md-8">
+
+                        <div class="text-muted small mb-1">
+                            Description
                         </div>
 
+                        {% if project.description %}
 
-                        <div class="col-md-4">
-
-                            <div class="text-muted small mb-1">
-                                Status
+                            <div>
+                                {{ project.description|linebreaks }}
                             </div>
 
-                            {% if project.status == "PL" %}
+                        {% else %}
 
-                                <span class="badge bg-secondary-subtle text-secondary-emphasis">
+                            <div class="text-muted">
+                                No description provided.
+                            </div>
 
-                                    {{ project.get_status_display }}
+                        {% endif %}
 
-                                </span>
+                    </div>
 
-                            {% elif project.status == "AC" %}
 
-                                <span class="badge bg-primary-subtle text-primary-emphasis">
+                    <div class="col-md-4">
 
-                                    {{ project.get_status_display }}
-
-                                </span>
-
-                            {% elif project.status == "CO" %}
-
-                                <span class="badge bg-success-subtle text-success-emphasis">
-
-                                    {{ project.get_status_display }}
-
-                                </span>
-
-                            {% endif %}
-
+                        <div class="text-muted small mb-1">
+                            Status
                         </div>
 
+                        {% if project.status == "PL" %}
 
-                        <div class="col-md-6">
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis">
 
-                            <div class="text-muted small mb-1">
-                                Deadline
-                            </div>
+                                {{ project.get_status_display }}
 
-                            {% if project.deadline %}
+                            </span>
 
-                                <div class="fw-semibold">
+                        {% elif project.status == "AC" %}
 
-                                    {{ project.deadline|date:"d M Y" }}
+                            <span class="badge bg-primary-subtle text-primary-emphasis">
 
-                                </div>
+                                {{ project.get_status_display }}
 
-                            {% else %}
+                            </span>
 
-                                <div class="text-muted">
-                                    No deadline set.
-                                </div>
+                        {% elif project.status == "CO" %}
 
-                            {% endif %}
+                            <span class="badge bg-success-subtle text-success-emphasis">
 
+                                {{ project.get_status_display }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <div class="text-muted small mb-1">
+                            Stakeholders
                         </div>
 
+                        {% if project.stakeholders %}
 
-                        <div class="col-md-6">
-
-                            <div class="text-muted small mb-1">
-                                Created
+                            <div>
+                                {{ project.stakeholders|linebreaks }}
                             </div>
+
+                        {% else %}
+
+                            <div class="text-muted">
+                                No stakeholders specified.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="text-muted small mb-1">
+                            Start Date
+                        </div>
+
+                        {% if project.start_date %}
 
                             <div class="fw-semibold">
 
-                                {{ project.created_at|date:"d M Y H:i" }}
+                                {{ project.start_date|date:"d M Y" }}
 
                             </div>
+
+                        {% else %}
+
+                            <div class="text-muted">
+                                No start date set.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="text-muted small mb-1">
+                            End Date
+                        </div>
+
+                        {% if project.end_date %}
+
+                            <div class="fw-semibold">
+
+                                {{ project.end_date|date:"d M Y" }}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-muted">
+                                No end date set.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="text-muted small mb-1">
+                            Created
+                        </div>
+
+                        <div class="fw-semibold">
+
+                            {{ project.created_at|date:"d M Y H:i" }}
 
                         </div>
 
@@ -170,24 +214,24 @@
 
                 </div>
 
+            </div>
 
-                <!-- Footer -->
 
-                <div class="card-footer bg-transparent border-top p-3">
+            <!-- Footer -->
 
-                    <div class="d-flex justify-content-end">
+            <div class="card-footer bg-transparent border-top p-3">
 
-                        <a
-                            href="{% url 'projects:list' %}"
-                            class="btn btn-secondary">
+                <div class="d-flex justify-content-end">
 
-                            <i class="bi bi-arrow-left me-2"></i>
+                    <a
+                        href="{% url 'projects:list' %}"
+                        class="btn btn-secondary">
 
-                            Back to Projects
+                        <i class="bi bi-arrow-left me-2"></i>
 
-                        </a>
+                        Back to Projects
 
-                    </div>
+                    </a>
 
                 </div>
 

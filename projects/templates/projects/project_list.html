@@ -6,167 +6,181 @@ Projects
 
 {% block content %}
 
-<div class="container-fluid px-0">
+<!-- Page Header -->
 
-    <!-- Page Header -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
 
-        <div>
+        <h1 class="mb-1 fw-semibold">
+            Projects
+        </h1>
 
-            <h1 class="mb-1 fw-semibold">
-                Projects
-            </h1>
-
-            <p class="text-muted mb-0">
-                Manage and keep track of your projects.
-            </p>
-
-        </div>
-
-        <a
-            href="{% url 'projects:create' %}"
-            class="btn btn-primary">
-
-            <i class="bi bi-plus-circle me-2"></i>
-
-            New Project
-
-        </a>
+        <p class="text-muted mb-0">
+            Manage and keep track of your projects.
+        </p>
 
     </div>
 
+    <a
+        href="{% url 'projects:create' %}"
+        class="btn btn-primary">
 
-    <!-- Projects -->
+        <i class="bi bi-plus-circle me-2"></i>
 
-    {% if projects %}
+        New Project
 
-        <div class="card shadow-sm">
+    </a>
 
-            <div class="table-responsive">
+</div>
 
-                <table class="table table-hover align-middle mb-0">
 
-                    <thead class="table-light">
+<!-- Projects -->
+
+{% if projects %}
+
+    <div class="card shadow-sm">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th class="px-4 py-3">
+                            Project
+                        </th>
+
+                        <th class="py-3">
+                            Status
+                        </th>
+
+                        <th class="py-3">
+                            Start Date
+                        </th>
+
+                        <th class="py-3 pe-4">
+                            End Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for project in projects %}
 
                         <tr>
 
-                            <th class="px-4 py-3">
-                                Project
-                            </th>
+                            <td class="px-4">
 
-                            <th class="py-3">
-                                Status
-                            </th>
+                                <a
+                                    href="{% url 'projects:detail' project.pk %}"
+                                    class="text-decoration-none fw-semibold">
 
-                            <th class="py-3 pe-4">
-                                Deadline
-                            </th>
+                                    {{ project.title }}
+
+                                </a>
+
+                            </td>
+
+                            <td>
+
+                                {% if project.status == "PL" %}
+
+                                    <span class="badge bg-secondary-subtle text-secondary-emphasis">
+                                        {{ project.get_status_display }}
+                                    </span>
+
+                                {% elif project.status == "AC" %}
+
+                                    <span class="badge bg-primary-subtle text-primary-emphasis">
+                                        {{ project.get_status_display }}
+                                    </span>
+
+                                {% elif project.status == "CO" %}
+
+                                    <span class="badge bg-success-subtle text-success-emphasis">
+                                        {{ project.get_status_display }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="text-muted">
+
+                                {% if project.start_date %}
+
+                                    {{ project.start_date|date:"d M Y" }}
+
+                                {% else %}
+
+                                    Not set
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="text-muted pe-4">
+
+                                {% if project.end_date %}
+
+                                    {{ project.end_date|date:"d M Y" }}
+
+                                {% else %}
+
+                                    Not set
+
+                                {% endif %}
+
+                            </td>
 
                         </tr>
 
-                    </thead>
+                    {% endfor %}
 
-                    <tbody>
+                </tbody>
 
-                        {% for project in projects %}
-
-                            <tr>
-
-                                <td class="px-4">
-
-                                    <a
-                                        href="{% url 'projects:detail' project.pk %}"
-                                        class="text-decoration-none fw-semibold">
-
-                                        {{ project.title }}
-
-                                    </a>
-
-                                </td>
-
-                                <td>
-
-                                    {% if project.status == "PL" %}
-
-                                        <span class="badge bg-secondary-subtle text-secondary-emphasis">
-                                            {{ project.get_status_display }}
-                                        </span>
-
-                                    {% elif project.status == "AC" %}
-
-                                        <span class="badge bg-primary-subtle text-primary-emphasis">
-                                            {{ project.get_status_display }}
-                                        </span>
-
-                                    {% elif project.status == "CO" %}
-
-                                        <span class="badge bg-success-subtle text-success-emphasis">
-                                            {{ project.get_status_display }}
-                                        </span>
-
-                                    {% endif %}
-
-                                </td>
-
-                                <td class="text-muted pe-4">
-
-                                    {% if project.deadline %}
-
-                                        {{ project.deadline|date:"d M Y" }}
-
-                                    {% else %}
-
-                                        No deadline
-
-                                    {% endif %}
-
-                                </td>
-
-                            </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            </table>
 
         </div>
 
-    {% else %}
+    </div>
 
-        <div class="card shadow-sm">
+{% else %}
 
-            <div class="card-body text-center py-5">
+    <div class="card shadow-sm">
 
-                <i class="bi bi-folder display-4 text-muted"></i>
+        <div class="card-body text-center py-5">
 
-                <h4 class="mt-3">
-                    No projects yet
-                </h4>
+            <i class="bi bi-folder display-4 text-muted"></i>
 
-                <p class="text-muted mb-4">
-                    Create your first project to get started.
-                </p>
+            <h4 class="mt-3">
+                No projects yet
+            </h4>
 
-                <a
-                    href="{% url 'projects:create' %}"
-                    class="btn btn-primary">
+            <p class="text-muted mb-4">
+                Create your first project to get started.
+            </p>
 
-                    <i class="bi bi-plus-circle me-2"></i>
+            <a
+                href="{% url 'projects:create' %}"
+                class="btn btn-primary">
 
-                    Create Your First Project
+                <i class="bi bi-plus-circle me-2"></i>
 
-                </a>
+                Create Your First Project
 
-            </div>
+            </a>
 
         </div>
 
-    {% endif %}
+    </div>
 
-</div>
+{% endif %}
 
 {% endblock %}
