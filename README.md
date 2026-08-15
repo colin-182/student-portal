@@ -1,4 +1,9 @@
 # Student Portal
+# RENDER Link - 
+https://student-portal-bteu.onrender.com
+
+# Github Link - 
+https://github.com/colin-182/student-portal
 
 
 A Django-based student portal that allows authenticated users to manage projects, communicate with other users, and manage their profile information.
