@@ -31,7 +31,7 @@ load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
-    "django-insecure-c!+w*7(@4!#i(v_kne!$l_#%!a$0e3zgykt07&cu2(b=f9%55^",
+    "local-development-secret-key-7f4d9a2c8e6b1f3a5d7c9e2b4f6a8d1c3e5",
 )
 
 DEBUG = os.getenv(
@@ -58,6 +58,29 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+
+
+# Production security settings.
+
+if not DEBUG:
+
+    SECURE_SSL_REDIRECT = True
+
+    SECURE_HSTS_SECONDS = 31536000
+
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+    SECURE_HSTS_PRELOAD = True
+
+    SESSION_COOKIE_SECURE = True
+
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
+    SECURE_BROWSER_XSS_FILTER = True
+
+    SECURE_REFERRER_POLICY = "same-origin"
 
 
 # --------------------------------------------------
@@ -87,10 +110,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
-    # WhiteNoise serves collected static files in production.
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -139,6 +158,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 if DATABASE_URL:
+
     db_url = urlparse(DATABASE_URL)
 
     DATABASES = {
@@ -153,6 +173,7 @@ if DATABASE_URL:
     }
 
 else:
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -210,26 +231,13 @@ USE_TZ = True
 # Static & Media Files
 # --------------------------------------------------
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# WhiteNoise stores static files using hashed filenames in production.
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": (
-            "whitenoise.storage.CompressedManifestStaticFilesStorage"
-        ),
-    },
-}
-
 
 MEDIA_URL = "/media/"
 
@@ -256,6 +264,39 @@ LOGOUT_REDIRECT_URL = "login"
 # Email
 # --------------------------------------------------
 
-EMAIL_BACKEND = (
-    "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = os.getenv(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend",
+)
+
+EMAIL_HOST = os.getenv(
+    "EMAIL_HOST",
+    "",
+)
+
+EMAIL_PORT = int(
+    os.getenv(
+        "EMAIL_PORT",
+        "587",
+    )
+)
+
+EMAIL_USE_TLS = os.getenv(
+    "EMAIL_USE_TLS",
+    "True",
+).lower() == "true"
+
+EMAIL_HOST_USER = os.getenv(
+    "EMAIL_HOST_USER",
+    "",
+)
+
+EMAIL_HOST_PASSWORD = os.getenv(
+    "EMAIL_HOST_PASSWORD",
+    "",
+)
+
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL",
+    "noreply@studentportal.local",
 )
