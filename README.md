@@ -137,3 +137,37 @@ student-portal/
 ├── manage.py
 ├── requirements.txt
 └── README.md
+
+## Deployment
+
+The application is configured for deployment on Render using the included
+`render.yaml` file.
+
+### Deploying to Render
+
+1. Push the project to GitHub.
+2. Create a new Render Blueprint.
+3. Connect the GitHub repository.
+4. Render will use `render.yaml` to create:
+   - The Student Portal web service.
+   - A PostgreSQL database.
+5. Add the required environment variables in Render:
+   - `SECRET_KEY`
+   - `ALLOWED_HOSTS`
+   - `CSRF_TRUSTED_ORIGINS`
+   - `EMAIL_HOST_USER`
+   - `EMAIL_HOST_PASSWORD`
+   - `DEFAULT_FROM_EMAIL`
+6. Deploy the application.
+7. Render automatically installs dependencies, collects static files,
+   applies database migrations, and starts the application using Gunicorn.
+
+### Accessing the Application
+
+Live application:
+
+https://student-portal-bteu.onrender.com
+
+GitHub repository:
+
+https://github.com/colin-182/student-portal
