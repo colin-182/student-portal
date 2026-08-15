@@ -9,6 +9,7 @@ from .models import Message
 
 @login_required
 def inbox(request):
+    """Display the current user's active received messages."""
     inbox_messages = Message.objects.filter(
         recipient=request.user,
         is_archived=False,
@@ -25,6 +26,7 @@ def inbox(request):
 
 @login_required
 def sent_messages(request):
+    """Display messages sent by the current user."""
     sent_messages = Message.objects.filter(
         sender=request.user,
     )
@@ -40,6 +42,7 @@ def sent_messages(request):
 
 @login_required
 def archived_messages(request):
+    """Display archived messages received by the current user."""
     archived_messages = Message.objects.filter(
         recipient=request.user,
         is_archived=True,
@@ -56,17 +59,17 @@ def archived_messages(request):
 
 @login_required
 def message_detail(request, pk):
+    """Display a message accessible to the current user."""
     message = get_object_or_404(
         Message.objects.filter(
-            Q(recipient=request.user) |
-            Q(sender=request.user)
+            Q(recipient=request.user) | Q(sender=request.user),
         ),
         pk=pk,
     )
 
     is_sender = message.sender == request.user
 
-    # Mark received messages as read when opened.
+    # Opening a received message marks it as read.
     if not is_sender and not message.is_read:
         message.is_read = True
         message.save(update_fields=["is_read"])
@@ -83,12 +86,11 @@ def message_detail(request, pk):
 
 @login_required
 def message_create(request):
+    """Create and send a new message from the current user."""
     if request.method == "POST":
-
         form = MessageForm(request.POST)
 
         if form.is_valid():
-
             message = form.save(commit=False)
             message.sender = request.user
             message.save()
@@ -98,12 +100,9 @@ def message_create(request):
                 "Message sent successfully.",
             )
 
-            return redirect(
-                "messaging:inbox",
-            )
+            return redirect("messaging:inbox")
 
     else:
-
         form = MessageForm()
 
     return render(
@@ -117,6 +116,7 @@ def message_create(request):
 
 @login_required
 def message_reply(request, pk):
+    """Reply to a message received by the current user."""
     original_message = get_object_or_404(
         Message,
         pk=pk,
@@ -124,12 +124,13 @@ def message_reply(request, pk):
     )
 
     if request.method == "POST":
-
         form = MessageForm(request.POST)
 
         if form.is_valid():
-
             reply = form.save(commit=False)
+
+            # Set these fields server-side so they cannot be
+            # changed through submitted form data.
             reply.sender = request.user
             reply.recipient = original_message.sender
             reply.save()
@@ -139,12 +140,9 @@ def message_reply(request, pk):
                 "Reply sent successfully.",
             )
 
-            return redirect(
-                "messaging:sent",
-            )
+            return redirect("messaging:sent")
 
     else:
-
         form = MessageForm(
             initial={
                 "recipient": original_message.sender,
@@ -163,6 +161,7 @@ def message_reply(request, pk):
 
 @login_required
 def archive_message(request, pk):
+    """Archive a message received by the current user."""
     message = get_object_or_404(
         Message,
         pk=pk,
@@ -170,7 +169,6 @@ def archive_message(request, pk):
     )
 
     if request.method == "POST":
-
         message.is_archived = True
         message.save(update_fields=["is_archived"])
 
@@ -179,9 +177,7 @@ def archive_message(request, pk):
             "Message archived successfully.",
         )
 
-        return redirect(
-            "messaging:inbox",
-        )
+        return redirect("messaging:inbox")
 
     return redirect(
         "messaging:detail",
@@ -191,6 +187,7 @@ def archive_message(request, pk):
 
 @login_required
 def restore_message(request, pk):
+    """Restore an archived message for the current user."""
     message = get_object_or_404(
         Message,
         pk=pk,
@@ -198,7 +195,6 @@ def restore_message(request, pk):
     )
 
     if request.method == "POST":
-
         message.is_archived = False
         message.save(update_fields=["is_archived"])
 
@@ -207,9 +203,7 @@ def restore_message(request, pk):
             "Message restored successfully.",
         )
 
-        return redirect(
-            "messaging:archived",
-        )
+        return redirect("messaging:archived")
 
     return redirect(
         "messaging:detail",
@@ -219,6 +213,7 @@ def restore_message(request, pk):
 
 @login_required
 def message_delete(request, pk):
+    """Permanently delete a message received by the current user."""
     message = get_object_or_404(
         Message,
         pk=pk,
@@ -226,7 +221,6 @@ def message_delete(request, pk):
     )
 
     if request.method == "POST":
-
         message.delete()
 
         messages.success(
@@ -234,9 +228,7 @@ def message_delete(request, pk):
             "Message deleted successfully.",
         )
 
-        return redirect(
-            "messaging:inbox",
-        )
+        return redirect("messaging:inbox")
 
     return render(
         request,
