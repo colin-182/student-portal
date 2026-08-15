@@ -9,7 +9,6 @@ from .models import Message
 
 @login_required
 def inbox(request):
-
     inbox_messages = Message.objects.filter(
         recipient=request.user,
         is_archived=False,
@@ -26,7 +25,6 @@ def inbox(request):
 
 @login_required
 def sent_messages(request):
-
     sent_messages = Message.objects.filter(
         sender=request.user,
     )
@@ -42,7 +40,6 @@ def sent_messages(request):
 
 @login_required
 def archived_messages(request):
-
     archived_messages = Message.objects.filter(
         recipient=request.user,
         is_archived=True,
@@ -59,7 +56,6 @@ def archived_messages(request):
 
 @login_required
 def message_detail(request, pk):
-
     message = get_object_or_404(
         Message.objects.filter(
             Q(recipient=request.user) |
@@ -70,9 +66,10 @@ def message_detail(request, pk):
 
     is_sender = message.sender == request.user
 
+    # Mark received messages as read when opened.
     if not is_sender and not message.is_read:
         message.is_read = True
-        message.save()
+        message.save(update_fields=["is_read"])
 
     return render(
         request,
@@ -86,7 +83,6 @@ def message_detail(request, pk):
 
 @login_required
 def message_create(request):
-
     if request.method == "POST":
 
         form = MessageForm(request.POST)
@@ -121,7 +117,6 @@ def message_create(request):
 
 @login_required
 def message_reply(request, pk):
-
     original_message = get_object_or_404(
         Message,
         pk=pk,
@@ -168,51 +163,62 @@ def message_reply(request, pk):
 
 @login_required
 def archive_message(request, pk):
-
     message = get_object_or_404(
         Message,
         pk=pk,
         recipient=request.user,
     )
 
-    message.is_archived = True
-    message.save()
+    if request.method == "POST":
 
-    messages.success(
-        request,
-        "Message archived successfully.",
-    )
+        message.is_archived = True
+        message.save(update_fields=["is_archived"])
+
+        messages.success(
+            request,
+            "Message archived successfully.",
+        )
+
+        return redirect(
+            "messaging:inbox",
+        )
 
     return redirect(
-        "messaging:inbox",
+        "messaging:detail",
+        pk=message.pk,
     )
 
 
 @login_required
 def restore_message(request, pk):
-
     message = get_object_or_404(
         Message,
         pk=pk,
         recipient=request.user,
     )
 
-    message.is_archived = False
-    message.save()
+    if request.method == "POST":
 
-    messages.success(
-        request,
-        "Message restored successfully.",
-    )
+        message.is_archived = False
+        message.save(update_fields=["is_archived"])
+
+        messages.success(
+            request,
+            "Message restored successfully.",
+        )
+
+        return redirect(
+            "messaging:archived",
+        )
 
     return redirect(
-        "messaging:archived",
+        "messaging:detail",
+        pk=message.pk,
     )
 
 
 @login_required
 def message_delete(request, pk):
-
     message = get_object_or_404(
         Message,
         pk=pk,

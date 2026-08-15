@@ -6,185 +6,203 @@
 
 {% block content %}
 
-<div class="container-fluid px-0">
+<!-- Page Header -->
 
-    <!-- Page Header -->
+<div class="mb-4">
 
-    <div class="mb-4">
+    <h1 class="mb-1 fw-semibold">
+        {{ message.subject }}
+    </h1>
 
-        <h1 class="mb-1 fw-semibold">
-            {{ message.subject }}
-        </h1>
+    <p class="text-muted mb-0">
 
-        <p class="text-muted mb-0">
+        {% if is_sender %}
 
-            {% if is_sender %}
+            Message sent to {{ message.recipient.username }}
 
-                Message sent to {{ message.recipient.username }}
+        {% else %}
 
-            {% else %}
+            Message received from {{ message.sender.username }}
 
-                Message received from {{ message.sender.username }}
+        {% endif %}
 
-            {% endif %}
+    </p>
 
-        </p>
-
-    </div>
+</div>
 
 
-    <!-- Message -->
+<!-- Message -->
 
-    <div class="row justify-content-center">
+<div class="row justify-content-center">
 
-        <div class="col-12 col-xl-9">
+    <div class="col-12 col-xl-9">
 
-            <div class="card shadow-sm">
+        <div class="card shadow-sm">
 
-                <div class="card-body p-4 p-md-5">
+            <div class="card-body p-4 p-md-5">
 
-                    <!-- Message Information -->
+                <!-- Message Information -->
 
-                    <div class="row g-4 mb-4">
+                <div class="row g-4 mb-4">
 
-                        <div class="col-md-6">
+                    <div class="col-md-6">
 
-                            <div class="text-muted small mb-1">
+                        <div class="text-muted small mb-1">
 
-                                {% if is_sender %}
-                                    To
-                                {% else %}
-                                    From
-                                {% endif %}
-
-                            </div>
-
-                            <div class="fw-semibold">
-
-                                {% if is_sender %}
-
-                                    {{ message.recipient.username }}
-
-                                {% else %}
-
-                                    {{ message.sender.username }}
-
-                                {% endif %}
-
-                            </div>
+                            {% if is_sender %}
+                                To
+                            {% else %}
+                                From
+                            {% endif %}
 
                         </div>
 
-                        <div class="col-md-6 text-md-end">
+                        <div class="fw-semibold">
 
-                            <div class="text-muted small mb-1">
-                                Sent
-                            </div>
+                            {% if is_sender %}
 
-                            <div class="fw-semibold">
+                                {{ message.recipient.username }}
 
-                                {{ message.sent_at|date:"d M Y H:i" }}
+                            {% else %}
 
-                            </div>
+                                {{ message.sender.username }}
+
+                            {% endif %}
 
                         </div>
 
                     </div>
 
 
-                    <hr>
+                    <div class="col-md-6 text-md-end">
 
+                        <div class="text-muted small mb-1">
+                            Sent
+                        </div>
 
-                    <!-- Message Body -->
+                        <div class="fw-semibold">
 
-                    <div class="mt-4">
+                            {{ message.sent_at|date:"d M Y H:i" }}
 
-                        {{ message.body|linebreaks }}
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- Actions -->
+                <hr>
 
-                <div class="card-footer bg-transparent border-top p-3">
 
-                    <div class="d-flex flex-wrap justify-content-end gap-2">
+                <!-- Message Body -->
 
-                        {% if is_sender %}
+                <div class="mt-4">
 
-                            <a
-                                href="{% url 'messaging:sent' %}"
-                                class="btn btn-secondary">
+                    {{ message.body|linebreaks }}
 
-                                <i class="bi bi-arrow-left me-2"></i>
+                </div>
 
-                                Back to Sent
+            </div>
 
-                            </a>
 
-                        {% else %}
+            <!-- Actions -->
 
-                            <a
-                                href="{% if message.is_archived %}{% url 'messaging:archived' %}{% else %}{% url 'messaging:inbox' %}{% endif %}"
-                                class="btn btn-secondary">
+            <div class="card-footer bg-transparent border-top p-3">
 
-                                <i class="bi bi-arrow-left me-2"></i>
+                <div class="d-flex flex-wrap justify-content-end gap-2">
 
-                                Back
+                    {% if is_sender %}
 
-                            </a>
+                        <a
+                            href="{% url 'messaging:sent' %}"
+                            class="btn btn-secondary">
 
-                            <a
-                                href="{% url 'messaging:reply' message.pk %}"
-                                class="btn btn-primary">
+                            <i class="bi bi-arrow-left me-2"></i>
 
-                                <i class="bi bi-reply me-2"></i>
+                            Back to Sent
 
-                                Reply
+                        </a>
 
-                            </a>
+                    {% else %}
 
-                            {% if message.is_archived %}
+                        <a
+                            href="{% if message.is_archived %}{% url 'messaging:archived' %}{% else %}{% url 'messaging:inbox' %}{% endif %}"
+                            class="btn btn-secondary">
 
-                                <a
-                                    href="{% url 'messaging:restore' message.pk %}"
+                            <i class="bi bi-arrow-left me-2"></i>
+
+                            Back
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'messaging:reply' message.pk %}"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-reply me-2"></i>
+
+                            Reply
+
+                        </a>
+
+
+                        {% if message.is_archived %}
+
+                            <form
+                                method="post"
+                                action="{% url 'messaging:restore' message.pk %}"
+                                class="d-inline">
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
                                     class="btn btn-success">
 
                                     <i class="bi bi-arrow-counterclockwise me-2"></i>
 
                                     Restore
 
-                                </a>
+                                </button>
 
-                            {% else %}
+                            </form>
 
-                                <a
-                                    href="{% url 'messaging:archive' message.pk %}"
+                        {% else %}
+
+                            <form
+                                method="post"
+                                action="{% url 'messaging:archive' message.pk %}"
+                                class="d-inline">
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
                                     class="btn btn-warning">
 
                                     <i class="bi bi-archive me-2"></i>
 
                                     Archive
 
-                                </a>
+                                </button>
 
-                            {% endif %}
-
-                            <a
-                                href="{% url 'messaging:delete' message.pk %}"
-                                class="btn btn-danger">
-
-                                <i class="bi bi-trash me-2"></i>
-
-                                Delete
-
-                            </a>
+                            </form>
 
                         {% endif %}
 
-                    </div>
+
+                        <a
+                            href="{% url 'messaging:delete' message.pk %}"
+                            class="btn btn-danger">
+
+                            <i class="bi bi-trash me-2"></i>
+
+                            Delete
+
+                        </a>
+
+                    {% endif %}
 
                 </div>
 
