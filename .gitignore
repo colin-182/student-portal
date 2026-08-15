@@ -21,3 +21,5 @@ staticfiles/
 
 # Logs
 *.log
+
+db.sqlite3
