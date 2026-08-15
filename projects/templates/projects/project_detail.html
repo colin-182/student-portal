@@ -38,7 +38,8 @@
 
             <a
                 href="{% url 'projects:delete' project.pk %}"
-                class="btn btn-outline-danger">
+                class="btn btn-outline-danger"
+                onclick="return confirm('Are you sure you want to delete this project? This action cannot be undone.');">
 
                 <i class="bi bi-trash me-2"></i>
 
@@ -67,6 +68,8 @@
 
                 <div class="row g-4">
 
+                    <!-- Description -->
+
                     <div class="col-md-8">
 
                         <div class="text-muted small mb-1">
@@ -89,6 +92,8 @@
 
                     </div>
 
+
+                    <!-- Status -->
 
                     <div class="col-md-4">
 
@@ -125,30 +130,9 @@
                     </div>
 
 
-                    <div class="col-12">
+                    <!-- Start Date -->
 
-                        <div class="text-muted small mb-1">
-                            Stakeholders
-                        </div>
-
-                        {% if project.stakeholders %}
-
-                            <div>
-                                {{ project.stakeholders|linebreaks }}
-                            </div>
-
-                        {% else %}
-
-                            <div class="text-muted">
-                                No stakeholders specified.
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <div class="col-md-6">
+                    <div class="col-md-4">
 
                         <div class="text-muted small mb-1">
                             Start Date
@@ -173,7 +157,9 @@
                     </div>
 
 
-                    <div class="col-md-6">
+                    <!-- End Date -->
+
+                    <div class="col-md-4">
 
                         <div class="text-muted small mb-1">
                             End Date
@@ -198,7 +184,9 @@
                     </div>
 
 
-                    <div class="col-md-6">
+                    <!-- Created -->
+
+                    <div class="col-md-4">
 
                         <div class="text-muted small mb-1">
                             Created
@@ -209,6 +197,31 @@
                             {{ project.created_at|date:"d M Y H:i" }}
 
                         </div>
+
+                    </div>
+
+
+                    <!-- Stakeholders -->
+
+                    <div class="col-12">
+
+                        <div class="text-muted small mb-1">
+                            Stakeholders
+                        </div>
+
+                        {% if project.stakeholders %}
+
+                            <div>
+                                {{ project.stakeholders|linebreaks }}
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-muted">
+                                No stakeholders specified.
+                            </div>
+
+                        {% endif %}
 
                     </div>
 
